@@ -1,2 +1,4 @@
 # Reinforcement
 Integrating reinforcement learning within a cognitive framework for pattern detection
+
+We develop a Bayesian model that incorporates reinforcement learning to tackle the issue of detecting interesting and novel patterns within a cognitive based framework. Humans are able to detect novel patterns with ease, unfortunately it is difficult to endow computers with the same capabilities. In this work we employ reinforcement learning to optimize the best choice of pattern detection methods for various data tasks. We simulate a number of cognitive based criteria within a  Bayesian framework to define subjective measures of surprisingness, novelty and usefulness. By trial and error, the reinforcement learner will eventually select the most appropriate measures to use for a given data set to identify interesting patterns.
