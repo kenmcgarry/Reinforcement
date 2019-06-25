@@ -9,13 +9,16 @@ library(rpart.plot)
 library(rpart.utils)
 library(rattle)
 library(caret)
-library(dplyr)
+library(tidyverse)
 
+# point to where source code lives.
 setwd("C:/common_laptop/R-files/reinforcement")
 
+# define functions
 source("functions_interest.R")
 
+# create decision tree models and extract IF..THEN rules from them.
+source("buildmodels_interest.R")
 
-
-
-
+# assess rules for interestingness; provide function with rules and class labels
+ob_kyphosis <- objective_interest("Kyphsosis",rules_kyphosis,kyphosis$Kyphosis)

@@ -8,28 +8,29 @@ library(rattle)
 library(caret)
 library(dplyr)
 
-#model
-fit <- rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
+# model_kyphosis
+model_kyphosis <- rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, minsplit = 10,cp= .01)
+rules_kyphosis <- rpart.plot::rpart.rules(model_kyphosis, cover=TRUE, nn=TRUE)
+rpart.plot::rpart.rules(model_kyphosis, cover=TRUE, nn=TRUE)
+rpart.plot(model_kyphosis)
+caret::varImp(model_kyphosis, scale = TRUE)
 
-#dataframe having leaf node's rule and subrule combination
-rule_df <- rpart.rules.table(fit) %>%
-  filter(Leaf==TRUE) %>%
-  group_by(Rule) %>%
-  summarise(Subrules = paste(Subrule, collapse=","))
 
-#final dataframe
-df <- kyphosis %>%
-  mutate(Rule = row.names(fit$frame)[fit$where]) %>%
-  left_join(rule_df, by="Rule")
-head(df)
+# model_titanic
+data(ptitanic)
+model_titanic <- rpart(survived ~ ., data = ptitanic, minsplit = 10,cp = .01)
+rules_titanic <- rpart.plot::rpart.rules(model_titanic, cover=TRUE, nn=TRUE)
+rpart.plot(model_titanic)
+caret::varImp(model_titanic, scale = TRUE)
 
-#subrule table
-rpart.subrules.table(fit)
 
-rules <- rpart.plot::rpart.rules(fit, cover=TRUE, nn=TRUE)
-rpart.rules(fit, cover=TRUE, nn=TRUE)
-asRules(fit)
-varImp(fit, scale = FALSE)
+
+
+
+
+
+
+
 
 
 
