@@ -1,6 +1,12 @@
-txt=c('find matches of a string in a vector of strings',
-     'search position of a character string in an other string',
-     'Compare Strings');
 
-grep(txt,'strings')
+IGnames <- c("sex","sibsp","pclass","age","parch")
+scum[1,1]
+test <- str_extract_all(scum[3,1], regex(IGnames)) %>% unlist()
+
+length(test)
+fucked<-"absent"
+
+if(grep(rules_kyphosis[1,1],fucked)==1){}
+
+
 

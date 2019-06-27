@@ -50,15 +50,14 @@ obj_imbalance <- function(ruleset,classes){
 # we dont like false negatives. Class labels are ALWAYS the first column in RPART ruleset.
 obj_misclasscosts <- function(ruleset,penaltyclass){
   nrules <- nrow(ruleset)  # how many rules?
-  nante <- ncol(ruleset)  # how many columns?
-  miscost <- seq(0,0,length.out=nrules)  # create space for them.
+  miscost <- rep(0,length.out=nrules)  # create space for them.
   
-  if(penaltyclass==0){ # check if we dont have a penalty class
-  for(i in 1:nrow(ruleset)){
-    if((ruleset[i,1] == penaltyclass)) # string match and if true set to 1
-      miscost[i] <- 1
-    }}
-
+  if(penaltyclass != 0) {# check if we have a penalty class
+    for(i in 1:nrules){
+      if(str_detect(ruleset[i,1],penaltyclass)){miscost[i] <- 1}
+    }
+  }
+  
   ruleset <- cbind(ruleset,miscost)
   
   return(ruleset)
@@ -68,36 +67,29 @@ obj_misclasscosts <- function(ruleset,penaltyclass){
 # bearing value of each attribute in a rule and average it over the rule.
 obj_attribinfo <- function(ruleset,dataset,classlabels,IG){
   nrules <- nrow(ruleset)  # how many rules?
-  nante <- ncol(ruleset)  # how many columns?
-  attinfo <- seq(0,0,length.out=nrules)  # create space for them.
-  tempdata <- rep(0.001,length.out=nrules)
+  attinfo <-  rep(0.01,0,length.out=nrules)  # create space for them.
+  tempdata <- rep(0.01,length.out=nrules)
+  nante    <- rep(0.0,length.out=nrules)
   k <- ncol(dataset)-1  # how many attributes, minus class label?
   cat("\nwe have ",k," attributes")
   
   print(IG)
   IGnames <- rownames(IG); 
-  cat("\n variables",IGnames)
   antestring <- unite_(ruleset, "searchstring", colnames(ruleset),remove=TRUE,sep=" ")
-  print(antestring)
   
   for(i in 1:nrow(antestring)){  # for each rule
-    #for(j in 1:length(IGnames)){  # for every antecedent in rule
-      #index <- grep(IGnames[j],antestring[i,1])  # does this anetecedent exist in this rule?
-      index <- match(IGnames,antestring[i,1])
-      cat("\nindex",index)
-      if(length(index)>0){                     # if not zero then it does indeed
-        #cat("\nante=",length(index))
-        tempdata[i] <- IG[i,1]}# * length(index)}
-    #}
-    cat("\ninfo value ",tempdata[i])
-    #cat("\nsum ",1/(sum(tempdata)/length(which(tempdata !=0))))
-    attinfo[i] <- 1/((sum(tempdata[i])/length(index)))
+    index <- str_extract_all(antestring[i,1], regex(IGnames)) %>% unlist()
+    if(length(index)>0){                    
+      tempdata[i] <- sum(IG[i:length(index),1])
+      nante[i] <- length(index)
+      attinfo[i] <- 1/((tempdata[i])/length(index))  # (Freitas,199) equation
+      if(is.na(attinfo[i])){attinfo[i] <- 0.01} # fudge-some calcs have NA results
+      if(is.infinite(attinfo[i])){attinfo[i] <- 0.01}} # fudge-some calcs have inf results
   }
-  ruleset <- cbind(ruleset,attinfo)  
-  return(antestring)
+  ruleset <- cbind(ruleset,attinfo)
+  ruleset <- cbind(ruleset,nante)  # we also calculate number of antecedents per rule (complexity)
+  return(ruleset)
 }
-
-
 
 
 # perform the five objective interestingness measures (calculations) on the ruleset. It will

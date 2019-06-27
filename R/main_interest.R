@@ -13,7 +13,7 @@ library(infotheo)
 library(tidyverse)
 library(dplyr)
 library(FSelector)
-
+library(stringr)
 
 # point to where source code lives.
 setwd("C:/common_laptop/R-files/reinforcement")
