@@ -51,12 +51,13 @@ obj_imbalance <- function(ruleset,classes){
 obj_misclasscosts <- function(ruleset,penaltyclass){
   nrules <- nrow(ruleset)  # how many rules?
   nante <- ncol(ruleset)  # how many columns?
-  miscost <- seq(0,0,length.out=nrules)  # create space for them (all set to zero or one).
+  miscost <- seq(0,0,length.out=nrules)  # create space for them.
   
+  if(penaltyclass==0){ # check if we dont have a penalty class
   for(i in 1:nrow(ruleset)){
-    if((ruleset[i,1]==penaltyclass)) 
+    if((ruleset[i,1] == penaltyclass)) # string match and if true set to 1
       miscost[i] <- 1
-    }
+    }}
 
   ruleset <- cbind(ruleset,miscost)
   
@@ -64,43 +65,52 @@ obj_misclasscosts <- function(ruleset,penaltyclass){
 }
 
 # 4. attribute information. Kullback-Liebler divergence is use to calculate the information
-# bearing value of each attribute and average it over each rule.
-obj_attribinfo <- function(ruleset){
+# bearing value of each attribute in a rule and average it over the rule.
+obj_attribinfo <- function(ruleset,dataset,classlabels,IG){
+  nrules <- nrow(ruleset)  # how many rules?
+  nante <- ncol(ruleset)  # how many columns?
+  attinfo <- seq(0,0,length.out=nrules)  # create space for them.
+  tempdata <- rep(0.001,length.out=nrules)
+  k <- ncol(dataset)-1  # how many attributes, minus class label?
+  cat("\nwe have ",k," attributes")
   
+  print(IG)
+  IGnames <- rownames(IG); 
+  cat("\n variables",IGnames)
+  antestring <- unite_(ruleset, "searchstring", colnames(ruleset),remove=TRUE,sep=" ")
+  print(antestring)
   
-  
-  return(ruleset)
+  for(i in 1:nrow(antestring)){  # for each rule
+    #for(j in 1:length(IGnames)){  # for every antecedent in rule
+      #index <- grep(IGnames[j],antestring[i,1])  # does this anetecedent exist in this rule?
+      index <- match(IGnames,antestring[i,1])
+      cat("\nindex",index)
+      if(length(index)>0){                     # if not zero then it does indeed
+        #cat("\nante=",length(index))
+        tempdata[i] <- IG[i,1]}# * length(index)}
+    #}
+    cat("\ninfo value ",tempdata[i])
+    #cat("\nsum ",1/(sum(tempdata)/length(which(tempdata !=0))))
+    attinfo[i] <- 1/((sum(tempdata[i])/length(index)))
+  }
+  ruleset <- cbind(ruleset,attinfo)  
+  return(antestring)
 }
 
 
 
 
-# 
-collect_objective_interest <- function(name,ruleset,classes){
-  SMALL <- 5  # min coverage
-  x <- 0
+# perform the five objective interestingness measures (calculations) on the ruleset. It will
+# add various columns to the rule data structure pertaining to the measures.
+collect_objective_interest <- function(name,ruleset,dataset,classes,penaltyclass,IG){
   
-  rulesummary <- data.frame(name=name,smalldis=0,imbalance=0, miscosts=0, 
-                            attinfo=0,asymmetry=0, complexity=0, 
-                            stringsAsFactors=FALSE) 
+  cat("\nCalculating interestingness measures for ", name)
+  ruleset <- obj_disjunct(ruleset)
+  ruleset <- obj_imbalance(ruleset,classes)    
+  ruleset <- obj_misclasscosts(ruleset,penaltyclass)
+  ruleset <- obj_attribinfo(ruleset,dataset,classes,IG)
   
-  for(i in 1:nrow(ruleset)){
-    tempr <- as.numeric(sub("%","",ruleset[i,19])) #remove percent sign and convert to number
-    if(tempr <= SMALL){
-      x <- x+1}}
-  rulesummary$smalldis <- x
-  
-  b <- table(classes)
-  c <- length(as.vector(b))
-  a <- sum(b)
-  if(min(b) < (a/c)){rulesummary$imbalance <- 1}
-  
-  rulesummary$miscosts <- 0
-  rulesummary$attinfo <- 0
-  rulesummary$asymmetry <- 0
-  rulesummary$complexity <- 0
-  
-  return(rulesummary)
+  return(ruleset)
 }
 
 
@@ -145,6 +155,26 @@ list.rules.rpart <- function(model)
     }
   }
 }
+
+# https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html
+informationgain <- function(tble) {
+  entropyBefore <- entropy(colSums(tble))
+  s <- rowSums(tble)
+  entropyAfter <- sum (s / sum(s) * apply(tble, MARGIN = 1, FUN = entropy ))
+  infogain <- entropyBefore - entropyAfter
+  return (infogain)
+}
+
+entropy <- function(vls) {
+  res <- vls/sum(vls) * log2(vls/sum(vls))
+  res[vls == 0] <- 0
+  -sum(res)
+}
+
+# test matrix for informationgain & entropy
+#B = matrix( c(2, 4, 3, 1, 5, 7), nrow=3,ncol=2)
+#informationgain(B)
+
 
 
 

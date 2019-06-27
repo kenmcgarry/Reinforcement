@@ -8,6 +8,7 @@ library(rpart.utils)
 library(rattle)
 library(caret)
 library(dplyr)
+library(FSelector)
 
 # model_kyphosis
 model_kyphosis <- rpart(Kyphosis ~ Age + Number + Start, data = kyphosis, minsplit = 10,cp= .01)
@@ -26,10 +27,9 @@ caret::varImp(model_titanic, scale = TRUE)
 # model iris
 data(iris)
 model_iris <- rpart(Species ~., data = iris, method = "class",minsplit = 10,cp = .01)
-rules_iris <- rpart.plot::rpart.rules(model_iris, cover=TRUE,extra=4)
+rules_iris <- rpart.plot::rpart.rules(model_iris, cover=TRUE,extra=4,style="wide")
 rpart.plot(model_iris)
 caret::varImp(model_iris, scale = TRUE)
-
 
 
 
