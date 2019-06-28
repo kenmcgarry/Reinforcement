@@ -1,11 +1,11 @@
 # mdp_interesting.R
 # 23/05/2019 - commenced work.
-# Embedding a MDP (reinforcement learner) for the asssessment of useful and novel
+# Embedding an MDP (reinforcement learner) for the asssessment of useful and novel
 # patterns during datamining. 
 
 setwd("C:/common_laptop/R-files/reinforcement")  # library(help="MDPtoolbox" ) library(help="pomdp")
 
-library(MDPtoolbox)  # probably best so far
+library(MDPtoolbox)  # probably best package so far
 library(igraph)
 
 # 1.  Select a data mining algorithm and data sets for RL [ENVIRONMENT]
