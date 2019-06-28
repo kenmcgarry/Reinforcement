@@ -49,6 +49,12 @@ ob_iris   <-   collect_objective_interest(name="Iris",
                                  penaltyclass = 0,
                                  IG=information.gain(Species ~ ., data=iris, unit="log2"))
 
+ob_pima   <-   collect_objective_interest(name="Pima",
+                                 ruleset=rules_pima,
+                                 dataset=pima,
+                                 classes=pima$Class,
+                                 penaltyclass = "diabetes",
+                                 IG=information.gain(Class ~ ., data=pima, unit="log2"))
 
 
 

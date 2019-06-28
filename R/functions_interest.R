@@ -64,7 +64,8 @@ obj_misclasscosts <- function(ruleset,penaltyclass){
 }
 
 # 4. attribute information. Kullback-Liebler divergence is use to calculate the information
-# bearing value of each attribute in a rule and average it over the rule.
+# bearing value of each attribute in a rule and average it over the rule. We also calculate
+# rule complexity.
 obj_attribinfo <- function(ruleset,dataset,classlabels,IG){
   nrules <- nrow(ruleset)  # how many rules?
   attinfo <-  rep(0.01,0,length.out=nrules)  # create space for them.
@@ -163,9 +164,7 @@ entropy <- function(vls) {
   -sum(res)
 }
 
-# test matrix for informationgain & entropy
-#B = matrix( c(2, 4, 3, 1, 5, 7), nrow=3,ncol=2)
-#informationgain(B)
+
 
 
 

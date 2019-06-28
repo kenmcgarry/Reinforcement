@@ -31,6 +31,12 @@ rules_iris <- rpart.plot::rpart.rules(model_iris, cover=TRUE,extra=4,style="wide
 rpart.plot(model_iris)
 caret::varImp(model_iris, scale = TRUE)
 
+load("pima.RData")
+model_pima <- rpart(Class ~., data = pima, minsplit = 10,cp= .01)
+rules_pima <- rpart.plot::rpart.rules(model_pima, cover=TRUE, extra=4)
+rpart.plot::rpart.rules(model_pima, cover=TRUE, nn=TRUE)
+rpart.plot(model_pima)
+caret::varImp(model_pima, scale = TRUE)
 
 
 
