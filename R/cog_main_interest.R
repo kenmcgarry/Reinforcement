@@ -19,13 +19,13 @@ library(stringr)
 setwd("C:/common_laptop/R-files/reinforcement")
 
 # define functions
-source("functions_interest.R")
+source("cog_functions_interest.R")
 
 # create decision tree models and extract IF..THEN rules.
-source("buildmodels_interest.R")
+source("cog_buildmodels_interest.R")
 
 # calculate objective interestingness measures for all datasets based on rule_sets and data.
-source("calcobj__interest.R")
+source("cog_calcobj__interest.R")
 
 
 

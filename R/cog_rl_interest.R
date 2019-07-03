@@ -5,8 +5,7 @@
 
 setwd("C:/common_laptop/R-files/reinforcement")  # library(help="MDPtoolbox" ) library(help="pomdp")
 
-library(MDPtoolbox)  # probably best package so far
-library(igraph)
+library(ReinforcementLearning)  # probably best RL package. 
 
 # 1.  Select a data mining algorithm and data sets for RL [ENVIRONMENT]
 # 2.  Define cognitive heuristic measures, in a bayesian framework [AGENT]
