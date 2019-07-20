@@ -1,0 +1,118 @@
+
+ Rule number: 1 [yval=diabetes cover=92 (12%) prob=0.13]
+   PlasmaGluc>=127.5
+   BMI>=29.95
+   PlasmaGluc>=157.5
+
+ Rule number: 2 [yval=diabetes cover=65 (8%) prob=0.28]
+   PlasmaGluc>=127.5
+   BMI>=29.95
+   PlasmaGluc< 157.5
+   Ped>=30.5
+
+ Rule number: 3 [yval=diabetes cover=10 (1%) prob=0.00]
+   PlasmaGluc>=127.5
+   BMI>=29.95
+   PlasmaGluc< 157.5
+   Ped< 30.5
+   BloodPress< 61
+
+ Rule number: 4 [yval=diabetes cover=9 (1%) prob=0.33]
+   PlasmaGluc>=127.5
+   BMI>=29.95
+   PlasmaGluc< 157.5
+   Ped< 30.5
+   BloodPress>=61
+   BMI>=41.8
+
+ Rule number: 5 [yval=healthy cover=31 (4%) prob=0.77]
+   PlasmaGluc>=127.5
+   BMI>=29.95
+   PlasmaGluc< 157.5
+   Ped< 30.5
+   BloodPress>=61
+   BMI< 41.8
+
+ Rule number: 6 [yval=diabetes cover=27 (4%) prob=0.33]
+   PlasmaGluc>=127.5
+   BMI< 29.95
+   PlasmaGluc>=145.5
+   Ped>=25.5
+   Ped< 61
+
+ Rule number: 7 [yval=healthy cover=4 (1%) prob=1.00]
+   PlasmaGluc>=127.5
+   BMI< 29.95
+   PlasmaGluc>=145.5
+   Ped>=25.5
+   Ped>=61
+
+ Rule number: 8 [yval=healthy cover=4 (1%) prob=1.00]
+   PlasmaGluc>=127.5
+   BMI< 29.95
+   PlasmaGluc>=145.5
+   Ped< 25.5
+
+ Rule number: 9 [yval=healthy cover=41 (5%) prob=0.85]
+   PlasmaGluc>=127.5
+   BMI< 29.95
+   PlasmaGluc< 145.5
+
+ Rule number: 10 [yval=diabetes cover=34 (4%) prob=0.26]
+   PlasmaGluc< 127.5
+   Ped>=28.5
+   BMI>=26.35
+   PlasmaGluc>=99.5
+   DiaFunc>=0.561
+
+ Rule number: 11 [yval=diabetes cover=11 (1%) prob=0.18]
+   PlasmaGluc< 127.5
+   Ped>=28.5
+   BMI>=26.35
+   PlasmaGluc>=99.5
+   DiaFunc< 0.561
+   DiaFunc>=0.2
+   TimesPreg< 1.5
+
+ Rule number: 12 [yval=diabetes cover=12 (2%) prob=0.25]
+   PlasmaGluc< 127.5
+   Ped>=28.5
+   BMI>=26.35
+   PlasmaGluc>=99.5
+   DiaFunc< 0.561
+   DiaFunc>=0.2
+   TimesPreg>=1.5
+   BloodPress< 67
+
+ Rule number: 13 [yval=healthy cover=40 (5%) prob=0.70]
+   PlasmaGluc< 127.5
+   Ped>=28.5
+   BMI>=26.35
+   PlasmaGluc>=99.5
+   DiaFunc< 0.561
+   DiaFunc>=0.2
+   TimesPreg>=1.5
+   BloodPress>=67
+
+ Rule number: 14 [yval=healthy cover=21 (3%) prob=0.81]
+   PlasmaGluc< 127.5
+   Ped>=28.5
+   BMI>=26.35
+   PlasmaGluc>=99.5
+   DiaFunc< 0.561
+   DiaFunc< 0.2
+
+ Rule number: 15 [yval=healthy cover=55 (7%) prob=0.82]
+   PlasmaGluc< 127.5
+   Ped>=28.5
+   BMI>=26.35
+   PlasmaGluc< 99.5
+
+ Rule number: 16 [yval=healthy cover=41 (5%) prob=0.95]
+   PlasmaGluc< 127.5
+   Ped>=28.5
+   BMI< 26.35
+
+ Rule number: 17 [yval=healthy cover=271 (35%) prob=0.92]
+   PlasmaGluc< 127.5
+   Ped< 28.5
