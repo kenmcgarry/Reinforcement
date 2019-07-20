@@ -169,6 +169,14 @@ entropy <- function(vls) {
 }
 
 
+## Reinforcement Learning Functions
+environment <- function(state, action) {
+  ...
+  return(list("NextState" = newState,
+              "Reward" = reward))
+}
+
+
 
 
 

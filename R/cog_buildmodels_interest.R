@@ -2,6 +2,14 @@
 # using RPART package and utils to generate decision trees from data and then 
 # extract IF..THEN rules from them using rpart.plot::rpart.rules() function.
 
+# https://josepcurtodiaz.gitbooks.io/customer-analytics-with-r/chapter2.html
+# Diabetes Original data came from the Biostatistics program at Vanderbilt 
+# http://biostat.mc.vanderbilt.edu/wiki/Main/DataSets
+# https://rstudio-pubs-static.s3.amazonaws.com/396380_639e2f68b09e41a0b05f97b5dc8eb3f2.html
+# http://di.ulb.ac.be/map/adalpozz/pdf/Dalpozzolo2015PhD.pdf
+# https://medium.com/@alexeybnk/improving-q-learning-agent-trading-stock-by-adding-recurrency-and-reward-shaping-b9e0ee095c8b
+
+
 library(rpart)
 library(rpart.plot)
 library(rpart.utils)
